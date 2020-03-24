@@ -2,22 +2,31 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 
 class Login extends React.Component {
-  renderInput(formProps) {
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div className="ui error message">
+          <div className="header">{error}</div>
+        </div>
+      );
+    }
+  }
+  renderInput = formProps => {
     return (
       <div className="field">
         <label>{formProps.label}</label>
         <input {...formProps.input} />
-        <div>{formProps.meta.error}</div>
+        {this.renderError(formProps.meta)}
       </div>
     );
-  }
+  };
   onSubmit(formValues) {
     console.log(formValues);
   }
   render() {
     return (
       <form
-        className="ui form"
+        className="ui form error"
         onSubmit={this.props.handleSubmit(this.onSubmit)}
       >
         <Field name="email" component={this.renderInput} label="Enter email" />
