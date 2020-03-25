@@ -1,13 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const keys = require("./config/keys");
+const passport = require("passport");
 require("./models/User");
+
+// Passport Config
+require("./services/passport")(passport);
 
 const app = express();
 
 mongoose.connect(keys.mongoURI, () => console.log("Connected to Mongo"));
-
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/", (req, res) => {
   res.send("Welcome");

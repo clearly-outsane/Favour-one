@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Login from "./Login";
+import history from "../history";
 // import * as actions from "../actions";
 
 const Landing = () => <h2>Landing</h2>;
@@ -13,12 +14,12 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <BrowserRouter>
+        <Router history={history}>
           <div className="ui container">
             <Route exact path="/" component={Landing} />
             <Route path="/login" component={Login} />
           </div>
-        </BrowserRouter>
+        </Router>
       </div>
     );
   }

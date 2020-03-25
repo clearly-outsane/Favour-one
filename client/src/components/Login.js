@@ -1,5 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import * as actions from "../actions";
+import { connect } from "react-redux";
 
 class Login extends React.Component {
   renderError({ error, touched }) {
@@ -20,9 +22,9 @@ class Login extends React.Component {
       </div>
     );
   };
-  onSubmit(formValues) {
-    console.log(formValues);
-  }
+  onSubmit = formValues => {
+    this.props.fetchUser(formValues);
+  };
   render() {
     return (
       <form
@@ -52,7 +54,9 @@ const validate = formValue => {
   return error;
 };
 
+const decoratedComponent = connect(null, actions)(Login);
+
 export default reduxForm({
   form: "Login",
   validate
-})(Login);
+})(decoratedComponent);
