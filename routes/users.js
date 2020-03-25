@@ -49,6 +49,7 @@ router.post("/register", async (req, res, next) => {
         newUser
           .save()
           .then(user => {
+            console.log("New user saved", user);
             passport.authenticate("local", (err, user, info) => {
               if (err) {
                 return next(err);
