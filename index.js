@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const keys = require("./config/keys");
+const cookieSession = require("cookie-session");
 const passport = require("passport");
 require("./models/User");
 
@@ -8,10 +9,16 @@ require("./models/User");
 require("./services/passport")(passport);
 
 const app = express();
-
 mongoose.connect(keys.mongoURI, () => console.log("Connected to Mongo"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey]
+  })
+);
 
 // Passport middleware
 app.use(passport.initialize());
